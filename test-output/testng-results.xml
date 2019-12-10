@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="52822" started-at="2019-12-10T19:29:31Z" finished-at="2019-12-10T19:30:24Z">
+  <suite name="Default suite" duration-ms="25995" started-at="2019-12-10T20:03:28Z" finished-at="2019-12-10T20:03:54Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="52822" started-at="2019-12-10T19:29:31Z" finished-at="2019-12-10T19:30:24Z">
-      <class name="test.FlightBookingTest">
-        <test-method status="PASS" signature="testThatResultsAppearForAOneWayJourney()[pri:0, instance:test.FlightBookingTest@3012646b]" name="testThatResultsAppearForAOneWayJourney" duration-ms="52783" started-at="2019-12-11T00:59:31Z" finished-at="2019-12-11T01:00:24Z">
+    <test name="Default test" duration-ms="25995" started-at="2019-12-10T20:03:28Z" finished-at="2019-12-10T20:03:54Z">
+      <class name="test.HotelBookingTest">
+        <test-method status="PASS" signature="shouldBeAbleToSearchForHotels()[pri:0, instance:test.HotelBookingTest@52719fb6]" name="shouldBeAbleToSearchForHotels" duration-ms="25973" started-at="2019-12-11T01:33:28Z" finished-at="2019-12-11T01:33:54Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testThatResultsAppearForAOneWayJourney -->
-      </class> <!-- test.FlightBookingTest -->
+        </test-method> <!-- shouldBeAbleToSearchForHotels -->
+      </class> <!-- test.HotelBookingTest -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

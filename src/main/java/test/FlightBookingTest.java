@@ -4,14 +4,13 @@ import pages.FlightBookingPOM;
 import utility.Util;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class FlightBookingTest extends Util{
 
-	WebDriver driver = new ChromeDriver();
 	Util util = new Util();
+	WebDriver driver = util.selectBrowser();
 	FlightBookingPOM flightBooking = new FlightBookingPOM(driver);
 	@Test
 	public void testThatResultsAppearForAOneWayJourney() {

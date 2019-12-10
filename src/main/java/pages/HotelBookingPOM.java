@@ -3,12 +3,11 @@ package pages;
 import utility.Util;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 
 public class HotelBookingPOM {
 
 	Util util = new Util();
-	WebDriver driver = new ChromeDriver();
+	WebDriver driver;
 	By hotelLinkText =By.linkText("Hotels");
 	By localityTextBoxTags =By.id("Tags");
 	By searchHotelsButton =By.id("SearchHotelsButton");

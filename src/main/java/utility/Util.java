@@ -20,27 +20,25 @@ public class Util {
 
 	WebDriverWait wait;
 
-	public WebDriver setDriverPath() {
-		WebDriver driver = null;
-		try {
 
-			if (PlatformUtil.isMac()) {
-				System.setProperty("webdriver.chrome.driver", "chromedriver");
-			}
-			if (PlatformUtil.isWindows()) {
-				ChromeOptions options = new ChromeOptions();
-				options.addArguments("--disable-notifications");
-				System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
-				driver =new ChromeDriver(options);
-			}
-			if (PlatformUtil.isLinux()) {
-				System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
-				
-			}
-			return driver;
-		}catch (Exception e) {
-			e.printStackTrace();
-			return null;
+	public WebDriver selectBrowser() {
+		ChromeOptions options = new ChromeOptions();
+		options.addArguments("--disable-notifications");
+		options.addArguments("--disable-features=VizDisplayCompositor");
+		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		return new ChromeDriver(options);
+	}
+	
+	public void setDriverPath() {
+
+		if (PlatformUtil.isMac()) {
+			System.setProperty("webdriver.chrome.driver", "chromedriver");
+		}
+		if (PlatformUtil.isWindows()) {
+			System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+		}
+		if (PlatformUtil.isLinux()) {
+			System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
 		}
 	}
 
@@ -93,7 +91,8 @@ public class Util {
 		}
 	}
 
-	public void selectFromListElement(WebDriver driver,By byElement, int postion) {
+
+	public void selectFromListElementId(WebDriver driver,By byElement, int postion) {
 		wait=new WebDriverWait(driver, 20);
 		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
 			List<WebElement> destinationOptions = driver.findElement(byElement).findElements(By.tagName("li"));
@@ -103,9 +102,8 @@ public class Util {
 		else {
 			Assert.assertFalse(false,byElement+" Not found...!!!");
 		}
-	}
 
-	public void selectFromDropDown(WebDriver driver,By byElement, String option) {
+	}	public void selectFromDropDown(WebDriver driver,By byElement, String option) {
 		wait=new WebDriverWait(driver, 20);
 		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
 			Select element = new Select(driver.findElement(byElement));
@@ -115,7 +113,8 @@ public class Util {
 			Assert.assertFalse(false,byElement+" Not found...!!!");
 		}
 	}
-
+	
+	
 	public void waitFor(int durationInMilliSeconds) {
 		try {
 			Thread.sleep(durationInMilliSeconds);

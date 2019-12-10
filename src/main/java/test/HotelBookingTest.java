@@ -2,13 +2,12 @@ package test;
 import pages.HotelBookingPOM;
 import utility.Util;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
 
 public class HotelBookingTest {
 
-	WebDriver driver = new ChromeDriver();
 	Util util = new Util();
+	WebDriver driver = util.selectBrowser();
 	HotelBookingPOM hotelBooking = new HotelBookingPOM(driver);
 
 	@Test

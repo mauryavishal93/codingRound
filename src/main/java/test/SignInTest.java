@@ -2,7 +2,6 @@ package test;
 import pages.SignInPOM;
 import utility.Util;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -10,11 +9,10 @@ import org.testng.annotations.Test;
 
 public class SignInTest {
 
-	WebDriver driver = new ChromeDriver();
+	Util util = new Util();
+	WebDriver driver = util.selectBrowser();
 	
 	WebDriverWait wait=new WebDriverWait(driver, 20);
-	
-	Util util = new Util();
 	
 	SignInPOM signIn = new SignInPOM(driver);
 	
