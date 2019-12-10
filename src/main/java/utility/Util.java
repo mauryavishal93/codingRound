@@ -3,42 +3,74 @@ package utility;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import com.sun.javafx.PlatformUtil;
+
+@SuppressWarnings("restriction")
 public class Util {
+
 	WebDriverWait wait;
 
-	public void clickElementUsingXpath(WebDriver driver,String xpath) {
-		wait=new WebDriverWait(driver, 20);
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))) != null) {
-			driver.findElement(By.xpath(xpath)).click();
-			Assert.assertTrue(true,xpath+" successfully found...!!!");
-		}
-		else {
-			Assert.assertFalse(false,xpath+" Not found...!!!");
-		}
-	}
+	public WebDriver setDriverPath() {
+		WebDriver driver = null;
+		try {
 
-
-	public String getTextElementUsingId(WebDriver driver,String id) {
-		wait=new WebDriverWait(driver, 50);
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id))) != null) {
-			Assert.assertTrue(true,id+" successfully found...!!!");
-			return driver.findElement(By.id(id)).getText();
-		}
-		else {
-			Assert.assertFalse(false,id+" Not found...!!!");
+			if (PlatformUtil.isMac()) {
+				System.setProperty("webdriver.chrome.driver", "chromedriver");
+			}
+			if (PlatformUtil.isWindows()) {
+				ChromeOptions options = new ChromeOptions();
+				options.addArguments("--disable-notifications");
+				System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+				driver =new ChromeDriver(options);
+			}
+			if (PlatformUtil.isLinux()) {
+				System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
+				
+			}
+			return driver;
+		}catch (Exception e) {
+			e.printStackTrace();
 			return null;
 		}
 	}
 
-	public void switchToFrame(WebDriver driver,String frameId) {
+	public void clickElement(WebDriver driver,By byElement) {
+		wait=new WebDriverWait(driver, 20);
+		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
+			driver.findElement(byElement).click();
+			Assert.assertTrue(true,byElement+" successfully found...!!!");
+		}
+		else {
+			Assert.assertFalse(false,byElement+" Not found...!!!");
+		}
+	}
 
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(frameId))) != null) {
+
+	public String getTextElement(WebDriver driver,By byElement) {
+		wait=new WebDriverWait(driver, 50);
+		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
+			Assert.assertTrue(true,byElement+" successfully found...!!!");
+			return driver.findElement(byElement).getText();
+		}
+		else {
+			Assert.assertFalse(false,byElement+" Not found...!!!");
+			return null;
+		}
+	}
+
+	public void switchToFrame(WebDriver driver,By byElement,String frameId) {
+
+		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
 			driver.switchTo().frame(frameId);
 			Assert.assertTrue(true,frameId+" successfully found...!!!");
 		}
@@ -48,52 +80,57 @@ public class Util {
 
 	}
 
-	public void clickElementUsingId(WebDriver driver,String id) {
+
+	public void sendKeysToTextBox(WebDriver driver,By byElement, String keysToSend) {
 		wait=new WebDriverWait(driver, 20);
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id))) != null) {
-			driver.findElement(By.id(id)).click();
-			Assert.assertTrue(true,id+" successfully found...!!!");
+		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
+			driver.findElement(byElement).clear();
+			driver.findElement(byElement).sendKeys(keysToSend);
+			Assert.assertTrue(true,byElement+" successfully found...!!!");
 		}
 		else {
-			Assert.assertFalse(false,id+" Not found...!!!");
+			Assert.assertFalse(false,byElement+" Not found...!!!");
 		}
 	}
 
-	public void sendKeysUsingXpath(WebDriver driver,String xpath, String keysToSend) {
+	public void selectFromListElement(WebDriver driver,By byElement, int postion) {
 		wait=new WebDriverWait(driver, 20);
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath))) != null) {
-			driver.findElement(By.xpath(xpath)).clear();
-			driver.findElement(By.xpath(xpath)).sendKeys(keysToSend);
-			Assert.assertTrue(true,xpath+" successfully found...!!!");
-		}
-		else {
-			Assert.assertFalse(false,xpath+" Not found...!!!");
-		}
-	}
-
-
-	public void sendKeysUsingId(WebDriver driver,String id, String keysToSend) {
-		wait=new WebDriverWait(driver, 20);
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id))) != null) {
-			driver.findElement(By.id(id)).clear();
-			driver.findElement(By.id(id)).sendKeys(keysToSend);
-			Assert.assertTrue(true,id+" successfully found...!!!");
-		}
-		else {
-			Assert.assertFalse(false,id+" Not found...!!!");
-		}
-	}
-
-
-	public void selectFromListElementUsingId(WebDriver driver,String id, int postion) {
-		wait=new WebDriverWait(driver, 20);
-		if(wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id))) != null) {
-			List<WebElement> destinationOptions = driver.findElement(By.id(id)).findElements(By.tagName("li"));
+		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
+			List<WebElement> destinationOptions = driver.findElement(byElement).findElements(By.tagName("li"));
 			destinationOptions.get(postion).click();
-			Assert.assertTrue(true,id+" successfully found...!!!");
+			Assert.assertTrue(true,byElement+" successfully found...!!!");
 		}
 		else {
-			Assert.assertFalse(false,id+" Not found...!!!");
+			Assert.assertFalse(false,byElement+" Not found...!!!");
+		}
+	}
+
+	public void selectFromDropDown(WebDriver driver,By byElement, String option) {
+		wait=new WebDriverWait(driver, 20);
+		if(wait.until(ExpectedConditions.visibilityOfElementLocated(byElement)) != null) {
+			Select element = new Select(driver.findElement(byElement));
+			element.selectByVisibleText(option);
+		}
+		else {
+			Assert.assertFalse(false,byElement+" Not found...!!!");
+		}
+	}
+
+	public void waitFor(int durationInMilliSeconds) {
+		try {
+			Thread.sleep(durationInMilliSeconds);
+		} catch (InterruptedException e) {
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+	}
+
+
+	public boolean isElementPresent(WebDriver driver,By by) {
+		try {
+			driver.findElement(by);
+			return true;
+		} catch (NoSuchElementException e) {
+			return false;
 		}
 	}
 
